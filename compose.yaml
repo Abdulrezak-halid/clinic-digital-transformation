@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: clinic
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      POSTGRES_DB: clinic
+    volumes:
+      - clinic-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clinic -d clinic"]
+      interval: 5s
+      retries: 10
+    restart: unless-stopped
+  api:
+    build:
+      context: .
+      dockerfile: ops/Dockerfile
+      target: api
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?Set internal database URL}
+      MFA_ENCRYPTION_KEY: ${MFA_ENCRYPTION_KEY:?Set key}
+      APP_ORIGIN: ${APP_ORIGIN:?Set HTTPS origin}
+      NODE_ENV: production
+      HOST: 0.0.0.0
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+  migrate:
+    profiles: ["tools"]
+    build:
+      context: .
+      dockerfile: ops/Dockerfile
+      target: migrate
+    environment:
+      DATABASE_URL: ${MIGRATION_DATABASE_URL:?Set DDL-capable migration URL}
+    depends_on:
+      db:
+        condition: service_healthy
+  web:
+    build:
+      context: .
+      dockerfile: ops/Dockerfile
+      target: web
+    ports:
+      - "127.0.0.1:8088:8080"
+    depends_on: [api]
+    restart: unless-stopped
+volumes:
+  clinic-db:

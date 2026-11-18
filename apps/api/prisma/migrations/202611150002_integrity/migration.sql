@@ -1,0 +1,12 @@
+CREATE EXTENSION IF NOT EXISTS btree_gist;
+ALTER TABLE "Appointment" ADD CONSTRAINT appointment_time CHECK ("endsAt" > "startsAt");
+ALTER TABLE "Absence" ADD CONSTRAINT absence_time CHECK ("endsAt" > "startsAt");
+ALTER TABLE "Staff" ADD CONSTRAINT staff_hours CHECK ("startMinute" >= 0 AND "endMinute" <= 1440 AND "endMinute" > "startMinute");
+ALTER TABLE "SessionPackage" ADD CONSTRAINT package_positive CHECK (total > 0);
+ALTER TABLE "PackageLedger" ADD CONSTRAINT ledger_delta CHECK (delta IN (-1,1));
+ALTER TABLE "Appointment" ADD CONSTRAINT no_staff_overlap EXCLUDE USING gist ("staffId" WITH =, tstzrange("startsAt","endsAt",'[)') WITH &&) WHERE (status IN ('scheduled','in_progress','completed'));
+ALTER TABLE "Appointment" ADD CONSTRAINT no_patient_overlap EXCLUDE USING gist ("patientId" WITH =, tstzrange("startsAt","endsAt",'[)') WITH &&) WHERE (status IN ('scheduled','in_progress','completed'));
+ALTER TABLE "Appointment" ADD CONSTRAINT no_resource_overlap EXCLUDE USING gist ("resourceId" WITH =, tstzrange("startsAt","endsAt",'[)') WITH &&) WHERE (status IN ('scheduled','in_progress','completed'));
+CREATE FUNCTION immutable_history() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'History is append only'; END $$;
+CREATE TRIGGER audit_immutable BEFORE UPDATE OR DELETE ON "AuditLog" FOR EACH ROW EXECUTE FUNCTION immutable_history();
+CREATE TRIGGER ledger_immutable BEFORE UPDATE OR DELETE ON "PackageLedger" FOR EACH ROW EXECUTE FUNCTION immutable_history();

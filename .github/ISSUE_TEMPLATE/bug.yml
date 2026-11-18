@@ -1,0 +1,17 @@
+name: Hata bildirimi
+description: Kişisel veri içermeyen hata kaydı
+body:
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Sentetik veriyle tekrar adımları
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Beklenen ve gerçekleşen davranış
+  - type: input
+    id: request
+    attributes:
+      label: İstek kimliği ve sürüm

@@ -1,0 +1,6 @@
+{
+  "name": "Hamit Gümüş - Fizik Tedavi ve Klinik Yönetim Sistemi",
+  "description": "Fizyoterapist Hamit Gümüş Mersin Fizik Tedavi ve Manuel Terapi Kliniği için hasta takip, seans yönetimi, anatomik ağrı haritası ve finans takip sistemi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

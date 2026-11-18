@@ -1,0 +1,19 @@
+name: Uygulama görevi
+description: Kabul ve test ölçütleriyle iş tanımı
+body:
+  - type: textarea
+    id: story
+    attributes:
+      label: Kullanıcı ihtiyacı ve kapsam
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Bağımlılık, kabul ölçütü ve testler
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Veri, yetki ve migration etkisi

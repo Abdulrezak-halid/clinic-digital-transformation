@@ -1,0 +1,7 @@
+reference/
+package-lock.json
+node_modules/
+**/dist/
+*.docx
+test-results/
+playwright-report/

@@ -1,0 +1,144 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+enum Role {
+  ADMIN
+  THERAPIST
+  RECEPTIONIST
+}
+enum AppointmentStatus {
+  scheduled
+  in_progress
+  completed
+  cancelled
+  no_show
+}
+model User {
+  id String @id @default(uuid()) @db.Uuid
+  email String @unique
+  name String
+  role Role
+  passwordHash String
+  mfaSecret String?
+  lastTotpStep BigInt?
+  active Boolean @default(true)
+  staffId String? @unique @db.Uuid
+  staff Staff? @relation(fields:[staffId],references:[id],onDelete:Restrict)
+  sessions LoginSession[]
+}
+model LoginSession {
+  id String @id
+  userId String @db.Uuid
+  user User @relation(fields:[userId],references:[id],onDelete:Cascade)
+  csrf String
+  verified Boolean @default(false)
+  enrollmentSecret String?
+  expiresAt DateTime @db.Timestamptz()
+}
+model Invite {
+  tokenHash String @id
+  userId String @db.Uuid
+  expiresAt DateTime @db.Timestamptz()
+}
+model Staff {
+  id String @id @default(uuid()) @db.Uuid
+  name String
+  startMinute Int @default(540)
+  endMinute Int @default(1080)
+  weekdays Int[] @default([1,2,3,4,5])
+  user User?
+  appointments Appointment[]
+  absences Absence[]
+}
+model Absence {
+  id String @id @default(uuid()) @db.Uuid
+  staffId String @db.Uuid
+  staff Staff @relation(fields:[staffId],references:[id],onDelete:Restrict)
+  startsAt DateTime @db.Timestamptz()
+  endsAt DateTime @db.Timestamptz()
+}
+model Resource {
+  id String @id @default(uuid()) @db.Uuid
+  name String @unique
+  appointments Appointment[]
+}
+model Patient {
+  id String @id @default(uuid()) @db.Uuid
+  fileNumber Int @unique @default(autoincrement())
+  fullName String
+  phone String
+  administrativeNote String @default("")
+  archivedAt DateTime? @db.Timestamptz()
+  appointments Appointment[]
+  packages SessionPackage[]
+  sessions Session[]
+  @@index([phone])
+}
+model Appointment {
+  id String @id @default(uuid()) @db.Uuid
+  patientId String @db.Uuid
+  patient Patient @relation(fields:[patientId],references:[id],onDelete:Restrict)
+  staffId String @db.Uuid
+  staff Staff @relation(fields:[staffId],references:[id],onDelete:Restrict)
+  resourceId String @db.Uuid
+  resource Resource @relation(fields:[resourceId],references:[id],onDelete:Restrict)
+  startsAt DateTime @db.Timestamptz()
+  endsAt DateTime @db.Timestamptz()
+  status AppointmentStatus @default(scheduled)
+  version Int @default(0)
+  session Session?
+  @@index([startsAt])
+}
+model SessionPackage {
+  id String @id @default(uuid()) @db.Uuid
+  patientId String @db.Uuid
+  patient Patient @relation(fields:[patientId],references:[id],onDelete:Restrict)
+  label String
+  total Int
+  sessions Session[]
+  ledger PackageLedger[]
+}
+model Session {
+  id String @id @default(uuid()) @db.Uuid
+  appointmentId String @unique @db.Uuid
+  appointment Appointment @relation(fields:[appointmentId],references:[id],onDelete:Restrict)
+  patientId String @db.Uuid
+  patient Patient @relation(fields:[patientId],references:[id],onDelete:Restrict)
+  packageId String @db.Uuid
+  package SessionPackage @relation(fields:[packageId],references:[id],onDelete:Restrict)
+  completedAt DateTime @default(now()) @db.Timestamptz()
+  completedBy String @db.Uuid
+  reversedAt DateTime? @db.Timestamptz()
+  ledger PackageLedger[]
+}
+model PackageLedger {
+  id String @id @default(uuid()) @db.Uuid
+  packageId String @db.Uuid
+  package SessionPackage @relation(fields:[packageId],references:[id],onDelete:Restrict)
+  sessionId String @db.Uuid
+  session Session @relation(fields:[sessionId],references:[id],onDelete:Restrict)
+  delta Int
+  reason String
+  actorId String @db.Uuid
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  @@unique([sessionId,delta])
+}
+model AuditLog {
+  id String @id @default(uuid()) @db.Uuid
+  actorId String? @db.Uuid
+  action String
+  targetId String
+  requestId String
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  @@index([createdAt])
+}
+model Idempotency {
+  key String @id
+  fingerprint String
+  response Json
+  createdAt DateTime @default(now()) @db.Timestamptz()
+}

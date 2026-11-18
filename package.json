@@ -1,0 +1,34 @@
+{
+  "name": "hamit-clinic",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -k \"npm run dev -w apps/api\" \"npm run dev -w apps/web\"",
+    "build": "npm run build -w packages/contracts && npm run build -w apps/api && npm run build -w apps/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "eslint apps packages tests",
+    "format:check": "prettier --check apps packages docs ops tests *.md *.json",
+    "format": "prettier --write apps packages docs ops tests *.md *.json",
+    "test": "npm run test -w apps/api && npm run test -w apps/web",
+    "test:integration": "npm run test:integration -w apps/api",
+    "test:e2e": "playwright test",
+    "db:generate": "npm run db:generate -w apps/api",
+    "db:migrate": "npm run db:migrate -w apps/api",
+    "bootstrap": "npm run bootstrap -w apps/api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "typescript": "^5.9.3",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "typescript-eslint": "^8.46.4",
+    "prettier": "^3.6.2",
+    "@playwright/test": "^1.56.1"
+  },
+  "overrides": {
+    "deepmerge-ts": "^8.0.0"
+  }
+}

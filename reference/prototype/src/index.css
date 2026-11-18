@@ -1,0 +1,37 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Rubik', system-ui, -apple-system, sans-serif;
+  --font-display: 'Rubik', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-sage-50: #F4F7F4;
+  --color-sage-100: #E6EFE6;
+  --color-sage-200: #CFDFC0;
+  --color-sage-300: #B2C9B1;
+  --color-sage-400: #9AB699;
+  --color-sage-500: #82A381;
+  --color-sage-600: #6D8E6C;
+  --color-sage-700: #587457;
+  --color-sage-800: #445B43;
+  --color-sage-900: #314230;
+}
+
+:root {
+  font-family: 'Rubik', system-ui, -apple-system, sans-serif;
+}
+
+/* Print styling for Patient Clinical Report / Session Card */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}

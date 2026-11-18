@@ -1,0 +1,193 @@
+export type Language = 'tr' | 'ar' | 'en';
+
+export const TRANSLATIONS = {
+  tr: {
+    clinicTitle: 'Fizyoterapist Hamit Gümüş',
+    clinicSub: 'Mersin Fizik Tedavi ve Manuel Terapi Birimi',
+    locationBadge: 'Mersin · Yenişehir / Limonluk Mah. · Hantaş Prestij',
+    phone: '0537 970 96 45',
+    navDashboard: 'Genel Bakış',
+    navPatients: 'Hasta Dosyaları',
+    navAppointments: 'Randevu Takvimi',
+    navFinance: 'Finans & Kasa',
+    navProtocols: 'Tedavi Protokolleri',
+    navPitch: 'Proje Fikri (Neden Bu Sistem?)',
+    quickNewPatient: 'Yeni Hasta',
+    quickNewSession: 'Seans Kaydet',
+    quickAddExpense: 'Gider / Gelir Ekle',
+    quickNewAppointment: 'Randevu Oluştur',
+    
+    // Stats
+    statTodaySessions: 'Bugünkü Seanslar',
+    statActivePatients: 'Aktif Hastalar',
+    statAveragePainRelief: 'Ortalama Ağrı Azalması',
+    statMonthlyNet: 'Aylık Net Kasa',
+    statPendingSessions: 'Kalan Seans Hakları',
+    
+    // Filter & Search
+    searchPatientPlaceholder: 'Hasta adı, telefon veya dosya no ile ara...',
+    allConditions: 'Tüm Tanılar',
+    activeStatus: 'Aktif Tedavi',
+    completedStatus: 'Tamamlandı',
+    pausedStatus: 'Beklemede',
+    
+    // Patient file
+    fileNumber: 'Dosya No',
+    fullName: 'Ad Soyad',
+    condition: 'Ana Şikayet / Teşhis',
+    packageProgress: 'Seans Paketi İlerlemesi',
+    currentVAS: 'Güncel Ağrı (VAS)',
+    initialVAS: 'Başlangıç Ağrısı',
+    actions: 'İşlemler',
+    openFile: 'Dosyayı Aç',
+    sendWhatsApp: 'WhatsApp Hatırlatması',
+    addSession: 'Yeni Seans',
+    
+    // Clinical terms
+    bodyMapTitle: 'Anatomik Ağrı Haritası & Etkilenen Bölgeler',
+    bodyMapSub: 'Hastanın ağrı hissettiği bölgeleri seçin veya inceleyin',
+    sessionHistoryTitle: 'Klinik Seans Geçmişi & Notlar',
+    prescribeExercise: 'Ev Egzersizi Reçete Et',
+    printSessionCard: 'Seans Kartını Yazdır / PDF',
+    modalitiesApplied: 'Uygulanan Manuel Teknikler & Modaliteler',
+    clinicalObservations: 'Fizyoterapist Gözlemleri & Bulgular',
+    
+    // Finance
+    totalIncome: 'Toplam Gelir',
+    totalExpenses: 'Toplam Giderler',
+    netProfit: 'Net Klinik Kârı',
+    exportExcel: 'Excel / CSV Raporu İndir',
+    addTransaction: 'Yeni İşlem Kaydı',
+    category: 'Kategori',
+    amount: 'Tutar',
+    paymentMethod: 'Ödeme Türü',
+    date: 'Tarih',
+    description: 'Açıklama',
+  },
+  ar: {
+    clinicTitle: 'أخصائي العلاج الطبيعي حامد غوموش',
+    clinicSub: 'مركز مرسين للعلاج الطبيعي والعلاج اليدوي',
+    locationBadge: 'مرسين · يني شهير / ليمونلوك · مبنى هانتاش برستيج',
+    phone: '0537 970 96 45',
+    navDashboard: 'لوحة التحكم',
+    navPatients: 'ملفات المرضى',
+    navAppointments: 'جدول المواعيد',
+    navFinance: 'المالية والمصروفات',
+    navProtocols: 'بروتوكولات العلاج',
+    navPitch: 'عرض النظام للدكتور حامد (لماذا هذا النظام؟)',
+    quickNewPatient: 'مريض جديد',
+    quickNewSession: 'تسجيل جلسة',
+    quickAddExpense: 'إضافة إيراد / مصروف',
+    quickNewAppointment: 'حجز موعد',
+    
+    // Stats
+    statTodaySessions: 'جلسات اليوم',
+    statActivePatients: 'المرضى النشطون',
+    statAveragePainRelief: 'متوسط تخفيف الألم',
+    statMonthlyNet: 'صافي الصندوق الشهري',
+    statPendingSessions: 'الجلسات المتبقية',
+    
+    // Filter & Search
+    searchPatientPlaceholder: 'بحث باسم المريض، رقم الهاتف أو رقم الملف...',
+    allConditions: 'جميع التشخيصات',
+    activeStatus: 'علاج نشط',
+    completedStatus: 'مكتمل',
+    pausedStatus: 'معلق',
+    
+    // Patient file
+    fileNumber: 'رقم الملف',
+    fullName: 'الاسم الكامل',
+    condition: 'الشكوى الرئيسية / التشخيص',
+    packageProgress: 'تقدم باقة الجلسات',
+    currentVAS: 'مقياس الألم الحالي (VAS)',
+    initialVAS: 'الألم عند البداية',
+    actions: 'الإجراءات',
+    openFile: 'فتح الملف',
+    sendWhatsApp: 'تذكير واتساب',
+    addSession: 'جلسة جديدة',
+    
+    // Clinical terms
+    bodyMapTitle: 'خريطة الألم التشريحية والمناطق المصابة',
+    bodyMapSub: 'حدد المناطق التي يشعر فيها المريض بالألم أو افحصها',
+    sessionHistoryTitle: 'سجل الجلسات السريرية والملاحظات',
+    prescribeExercise: 'وصف تمارين منزلية',
+    printSessionCard: 'طباعة بطاقة الجلسات / PDF',
+    modalitiesApplied: 'التقنيات اليدوية المستخدمة',
+    clinicalObservations: 'ملاحظات المعالج الفيزيائي والنتائج',
+    
+    // Finance
+    totalIncome: 'إجمالي الدخل',
+    totalExpenses: 'إجمالي المصروفات',
+    netProfit: 'صافي أرباح العيادة',
+    exportExcel: 'تصدير تقرير Excel / CSV',
+    addTransaction: 'إضافة عملية مالية',
+    category: 'الفئة',
+    amount: 'المبلغ',
+    paymentMethod: 'طريقة الدفع',
+    date: 'التاريخ',
+    description: 'الوصف',
+  },
+  en: {
+    clinicTitle: 'Physiotherapist Hamit Gümüş',
+    clinicSub: 'Mersin Physical Therapy & Manual Therapy Unit',
+    locationBadge: 'Mersin · Yenişehir / Limonluk · Hantaş Prestij',
+    phone: '0537 970 96 45',
+    navDashboard: 'Dashboard',
+    navPatients: 'Patient Records',
+    navAppointments: 'Appointments',
+    navFinance: 'Finance & Ledger',
+    navProtocols: 'Clinical Protocols',
+    navPitch: 'Project Concept (Why This System?)',
+    quickNewPatient: 'New Patient',
+    quickNewSession: 'Record Session',
+    quickAddExpense: 'Add Income / Expense',
+    quickNewAppointment: 'Book Appointment',
+    
+    // Stats
+    statTodaySessions: "Today's Sessions",
+    statActivePatients: 'Active Patients',
+    statAveragePainRelief: 'Avg. Pain Reduction',
+    statMonthlyNet: 'Monthly Net Balance',
+    statPendingSessions: 'Remaining Sessions',
+    
+    // Filter & Search
+    searchPatientPlaceholder: 'Search by patient name, phone or file number...',
+    allConditions: 'All Conditions',
+    activeStatus: 'Active',
+    completedStatus: 'Completed',
+    pausedStatus: 'Paused',
+    
+    // Patient file
+    fileNumber: 'File No',
+    fullName: 'Full Name',
+    condition: 'Primary Diagnosis',
+    packageProgress: 'Package Progress',
+    currentVAS: 'Current Pain (VAS)',
+    initialVAS: 'Initial Pain',
+    actions: 'Actions',
+    openFile: 'Open File',
+    sendWhatsApp: 'WhatsApp Reminder',
+    addSession: 'New Session',
+    
+    // Clinical terms
+    bodyMapTitle: 'Anatomical Pain Map & Affected Zones',
+    bodyMapSub: 'Select or review pain trigger areas on the patient',
+    sessionHistoryTitle: 'Clinical Session History & Logs',
+    prescribeExercise: 'Prescribe Home Exercises',
+    printSessionCard: 'Print Session Card / PDF',
+    modalitiesApplied: 'Manual Techniques & Modalities Applied',
+    clinicalObservations: 'Therapist Observations & Findings',
+    
+    // Finance
+    totalIncome: 'Total Income',
+    totalExpenses: 'Total Expenses',
+    netProfit: 'Clinic Net Profit',
+    exportExcel: 'Export Excel / CSV Report',
+    addTransaction: 'Add Transaction',
+    category: 'Category',
+    amount: 'Amount',
+    paymentMethod: 'Payment Method',
+    date: 'Date',
+    description: 'Description',
+  },
+};
